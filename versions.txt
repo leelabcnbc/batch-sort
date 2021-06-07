@@ -1,0 +1,53 @@
+SAC - Spike Automatic Classifier
+--------------------------------
+Version 1.0 (released August 10 1998): all waveforms from one channel are loaded into 
+memory, and sorted using a two stage sorter: stage #1 is robust FCM algorithm, and stage #2
+is EM. User can then merge clusters and write all classifications to disk. Distance metric 
+Mahalanobis, truncated at 95%(or other) of chi square distribution.
+
+Version 1.1 (released August 18 1998): 2000 waveforms are sampled at uniformly spaced bursts
+across all files(for a specific channel). Final sorting occurs when 'write' button is 
+pressed, and is done by template matching to cluster centers over the discrete set of shifts
+defined by the sampling. A new feature is the drawing of the waveforms while the 
+sorting is in process. This version uses Dave's uigetfiles for the multiple file loading. 
+I found and corrected a problem with the calculation of the center of mass: I wans't
+substracting the minimum value of the peak region.
+
+Version 1.15 (released 13 Oct 1998): Updates to sac_write, sac_splinealign, sac_gui, sac,
+ sac_nevscan. Introduced ability to save parameters in file. Center of Mass calculation was
+ changed marginally (had problem when waveform had a 'Mass' which was flat). sac_nevscan had
+ a problem when there were only a few channels present ('pop' detection would erase them).
+Cluster centers are ordered by ascending energy.
+
+
+corrections 11/9/99: modified sac_nevscan and sac_get_waveforms to read and account for 2 
+bytes/sample.
+
+version 2 (2001): uses t-distribution algorithm.
+
+corrections 2/2003: modified sac_write and sac_apply_params to account for 2 bytes/sample.
+Bug reported by Mario Ringach.
+
+version 2.05: added plexon capability (sac_plxscan and change in sac_write). sac_write writes
+the classification item by item. Could be faster by writing blocks.
+
+version 2.10 (June 24 2003): fully plexon capable version (with sac_apply parameters). 
+sac_write was changed to convert unit 255 to unit 0; sac_apply_params was changed, 
+and now the external loop is across channels (not completely efficient).
+
+version 2.11 (mistakenly called 2.06) : added the sac_distribution_inverse that allows 
+the calculation of Mahalanobis bounds for t-distributions.
+
+version 2.12 (August 12 2003): added write_nev which allows user to write one channel into
+a NEV file. Added two sample files. Fixed errors in sac_write and sac_nevscan that
+caused errors in NEV file writing (problem reported by Eli Nelken). Changed sac_t_master
+to find a better N for the case of small number of spikes. Changed Betad.m to betad.m.
+
+version 2.13 (December 17 2003): modified help of write_nev and changed SAC_doc.
+
+version 2.14 (May 31 2004): sac_get_waveforms line 63 had to be modified to solve bug that
+messed up opening multiple files (i changed to i-oldnum). Bug reprted by Seung-Jae Kim. Not
+clear how I didn't observe this bug before.
+
+version 2.15 (July 26 2005): sac_nevscan modified - lines 34-36, to correctly skip packets 
+that are not neuevwav. Bug reported by Jeannette Vizuete.
